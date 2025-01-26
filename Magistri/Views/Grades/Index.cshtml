@@ -1,0 +1,59 @@
+﻿@using Magistri.ViewModels;
+@model IEnumerable<GradesViewModel>;
+<div class="row">
+    <div class="col-9">
+        <h1 class="">List of all grades</h1>
+    </div>
+    <div class="col-3">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-outline-dark w-100">Home</a>
+    </div>
+</div>
+<hr />
+<div>
+    @if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+    {
+        <a class="btn btn-outline-dark mb-2" asp-controller="Grades" asp-action="Create">
+            Add a
+            new grade
+        </a>
+    }
+</div>
+@foreach (var item in Model) {
+    <div class="border border-1 border-dark p-2 rounded-3 mt-1">
+        <p>@item.StudentName </p>
+        <p>
+            @item.SubjectName: @item.Topic - @item.Mark <br>
+            @item.Date.ToShortDateString()
+        </p>
+        @if (User.IsInRole("Teacher") || User.IsInRole("Admin")) {
+        <a class="btn btn-dark" asp-controller="Grades" asp-action="Edit"
+           asp-route-id="@item.Id">Edit</a>
+        <button type="button"
+                class="btn btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#modal-@item.Id">
+            Delete
+        </button>
+        <div class="modal fade" id="modal-@item.Id" tabindex="-1" aria-labelledby="modalLabel-@item.Id" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalLabel-@item.Id">Are you sure?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Do you want to delete grade for <strong>@item.StudentName</strong> from <strong>@item.SubjectName</strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Back</button>
+                            <button type="submit" class="btn btn-dark">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+}

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AppUser>
+<div class="row">
+    <div class="col-9">
+        <h1 class="">List of all users</h1>
+    </div>
+    <div class="col-3">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-outline-dark w-100">Home</a>
+    </div>
+</div>
+<hr />
+<a asp-action="Create" class="btn btn-outline-dark mb-2">Create a User</a>
+<table class="table table-sm table-bordered border-dark">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <th>Edit</th>
+                <th>Delete</th>
+            }
+    </tr>
+    @foreach (AppUser user in Model) {
+        <tr>
+            <td>@user.Id</td> @*<td> = table data*@
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <td>
+                    @if (user.UserName != "Boss") {
+                        <a class="btn btn-sm btn-dark w-100 "  asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                    }
+                    </td>
+            }
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                <td>
+                    @if (user.UserName != "Boss") {
+                    <button type="button"
+                            class="btn btn-sm btn-danger w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modal-@user.Id">
+                        Delete
+                    </button>
+                    <div class="modal fade" id="modal-@user.Id" tabindex="-1" aria-labelledby="modalLabel-@user.Id" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="modalLabel-@user.Id">Are you sure?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to delete the user <strong>@user.UserName</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Back</button>
+                                        <button type="submit" class="btn btn-dark">Confirm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </td>
+            }
+        </tr>
+    }
+</table>

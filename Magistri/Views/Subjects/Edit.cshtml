@@ -1,0 +1,23 @@
+﻿@using Magistri.DTO
+@model SubjectDto
+<div class="row">
+    <div class="col-9">
+        <h1 class="">Edit subject</h1>
+    </div>
+    <div class="col-3">
+        <a asp-action="Index" class="btn btn-outline-dark w-100">Back</a>
+    </div>
+</div>
+<hr />
+<form asp-controller="Subjects" asp-action="Edit">
+    <div class="form-group mb-2">
+        <label asp-for="Name"></label>
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+
+    <div>
+        <input class="btn btn-dark" type="submit" value="Update" />
+    </div>
+</form>
+
+

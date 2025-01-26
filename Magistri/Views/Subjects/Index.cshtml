@@ -1,0 +1,33 @@
+﻿@using Magistri.DTO
+@model IEnumerable<SubjectDto>
+
+<div class="row">
+    <div class="col-9">
+        <h1 class="">List of all subjects</h1>
+    </div>
+    <div class="col-3">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-outline-dark w-100">Home</a>
+    </div>
+</div>
+<hr />
+<div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) {
+        <a class="btn btn-outline-dark mb-2" asp-action="Create">Create a new subject</a>
+    }
+</div>
+
+@foreach (var item in Model) {
+    <div class="border border-1 border-dark p-2 rounded-3 mt-1">
+        <h5>@item.Name </h5>
+        Id: @item.Id
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a class="btn btn-dark" asp-action="Edit" asp-route-id=@item.Id
+            >Edit</a>
+            <form method="post" asp-action="Delete" asp-route-id="@item.Id" style="display: inline;">
+                <input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Opravdu chcete tuto položku smazat?');" />
+        </form>
+        }
+    </div>
+}
+

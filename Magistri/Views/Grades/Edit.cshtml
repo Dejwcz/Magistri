@@ -1,0 +1,38 @@
+﻿@using Magistri.DTO;
+@model GradeDto;
+<div class="row">
+    <div class="col-9">
+        <h1 class="">Edit grade</h1>
+    </div>
+    <div class="col-3">
+        <a asp-action="Index" class="btn btn-outline-dark w-100">Back</a>
+    </div>
+</div>
+<hr />
+<div>
+    <form asp-action="Edit">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label class="control-label" asp-for="StudentId"></label>
+            <select class="form-control" asp-for="StudentId" asp-items="ViewBag.Students"></select>
+
+            <label class="control-label" asp-for="SubjectId"></label>
+            <select class="form-control" asp-for="SubjectId" asp-items="ViewBag.Subjects"></select>
+
+            <label asp-for="Topic"></label>
+            <input type="text" asp-for="Topic" class="form-control" />
+
+            <label asp-for="Mark"></label>
+            <input type="number" asp-for="Mark" min="1" max="5" class="form-control" />
+        </div>
+        <div>
+            <input class="btn btn-dark mt-2" type="submit" value="Save changes" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -1,0 +1,27 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 bg-dark text-light rounded-3 fw-bold">@Model</h1>
+    <p class="m-5">Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+
+
+
+    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+        <a class="btn btn-outline-dark mb-1" asp-controller="Students" asp-action="Index">Students</a>
+        <a class="btn btn-outline-dark mb-1" asp-controller="Subjects" asp-action="Index">Subjects</a>
+        <a class="btn btn-outline-dark mb-1" asp-controller="Grades" asp-action="Index">Grades</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-outline-dark mb-1" asp-controller="Users" asp-action="Index">Users</a>
+            <a type="button" class="btn btn-outline-dark mb-1" asp-controller="Roles" asp-action="Index">Roles</a>
+        }
+    </div>
+
+    <div>
+        <a class="btn btn-lg btn-outline-dark m-5" asp-controller="Account" asp-action="Logout" class="btn-danger">Logout</a>
+    </div>
+</div>
