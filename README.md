@@ -1,6 +1,6 @@
 # Magistri
 
-Course project. Simple websites with using ASP.NET Core, EF, Bootstrap
+Course project. Simple websites with using ASP.NET Core, EF, Bootstrap.
 Magistri is a Blazor-based web application designed to manage school-related data such as students, subjects, and grades. This project leverages ASP.NET Core Identity for authentication and authorization, and Entity Framework Core for database interactions.
 
 ## Features
